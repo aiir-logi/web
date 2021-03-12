@@ -12,16 +12,16 @@
 
 <mat-sidenav-container class="main-container">
   <mat-sidenav opened="{{menuOpened}}" mode="side" >
-    <mat-list>
+    <mat-list *ngFor="let item of items">
       <mat-list-item>
-        <button mat-button [routerLink]="['/home']" routerLinkActive="mat-accent">
-          <mat-icon>home</mat-icon> Home
+        <button mat-button [routerLink]="[item.path]" routerLinkActive="mat-accent">
+          <mat-icon>{{item.icon}}</mat-icon> Home
         </button>
       </mat-list-item>
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="mem"></div>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

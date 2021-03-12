@@ -8,11 +8,13 @@ import { MatListModule} from "@angular/material/list";
 import { HomeComponent } from "./home/home.component";
 import { RouterModule } from "@angular/router";
 import {AppRoutingModule} from "../app-routing.module";
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
