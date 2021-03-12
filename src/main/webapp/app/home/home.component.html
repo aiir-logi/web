@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="openMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Nie #w4rto</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with account circle icon">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+
+<mat-sidenav-container class="main-container">
+  <mat-sidenav opened="{{menuOpened}}" mode="side" >
+    <mat-list>
+      <mat-list-item>
+        <button mat-button [routerLink]="['/home']" routerLinkActive="mat-accent">
+          <mat-icon>home</mat-icon> Home
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="mem"></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

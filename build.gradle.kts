@@ -5,6 +5,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.3.4"
     id("com.google.cloud.tools.jib") version "2.6.0"
+    id("com.moowork.node") version "1.3.1"
 }
 
 version = "0.1"
@@ -68,10 +69,19 @@ tasks {
         }
     }
 
+  register<com.moowork.gradle.node.npm.NpmTask>("npmBuild") {
+    group = "angular"
+    dependsOn(npmInstall)
+    setArgs(listOf("run", "build", "--", "--prod", "--output-path=build/resources/main/static"))
+  }
 
-jib {
-    to {
-        image = "gcr.io/myapp/jib-image"
-    }
-}
+  jibDockerBuild {
+    dependsOn("npmBuild")
+  }
+
+  jib {
+      to {
+          image = "gcr.io/myapp/jib-image"
+      }
+  }
 }
