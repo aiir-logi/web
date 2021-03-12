@@ -15,7 +15,7 @@
     <mat-list *ngFor="let item of items">
       <mat-list-item>
         <button mat-button [routerLink]="[item.path]" routerLinkActive="mat-accent">
-          <mat-icon>{{item.icon}}</mat-icon> Home
+          <mat-icon>{{item.icon}}</mat-icon> &nbsp;{{item.name}}
         </button>
       </mat-list-item>
     </mat-list>

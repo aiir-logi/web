@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
     return homeChildrenRoutes.filter(item => !item.redirectTo && !item.hidden).map(item => {
       return {
         icon: item.data?.icon,
-        path: item.path
+        path: item.path,
+        name: item.path.toUpperCase()
       };
     });
   }
