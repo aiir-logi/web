@@ -53,9 +53,11 @@ dependencies {
     //implementation("io.micronaut.kafka:micronaut-kafka")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    runtimeOnly("com.h2database:h2")
+    //runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
+    testRuntimeOnly("org.testcontainers:postgresql")
 }
 
 
