@@ -1,4 +1,4 @@
-package pwr.aiir
+package pwr.aiir.webapp
 
 import io.micronaut.context.env.Environment
 import io.micronaut.http.annotation.Controller

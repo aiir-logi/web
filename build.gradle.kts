@@ -16,6 +16,12 @@ repositories {
     mavenCentral()
 }
 
+kapt {
+  arguments {
+    arg("micronaut.openapi.views.spec", "redoc.enabled=true,rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop")
+  }
+}
+
 micronaut {
     runtime("netty")
     testRuntime("junit5")
@@ -27,6 +33,8 @@ micronaut {
 
 dependencies {
     kapt("io.micronaut.data:micronaut-data-processor")
+    kapt("io.micronaut:micronaut-inject-java")
+    kapt("io.micronaut:micronaut-validation")
     kapt("io.micronaut.openapi:micronaut-openapi")
     implementation("io.micronaut:micronaut-validation")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
@@ -36,11 +44,13 @@ dependencies {
     implementation("javax.annotation:javax.annotation-api")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-hibernate-jpa")
     implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")
-    implementation("io.micronaut:micronaut-discovery-client")
-    implementation("io.micronaut.kafka:micronaut-kafka")
+    //implementation("io.micronaut:micronaut-discovery-client")
+    //implementation("io.micronaut.kafka:micronaut-kafka")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("com.h2database:h2")

@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-  public menuOpened = false;
+  public menuOpened = true;
   public items: Array<any> = [];
 
   constructor(private router: Router) {

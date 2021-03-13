@@ -9,7 +9,8 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', component: MainComponent, data: {icon: 'home'}}
+      {path: 'home', component: MainComponent, data: {icon: 'home'}},
+      {path: 'tasks', loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule), data: {icon: 'note_alt'}}
     ]
   },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },
