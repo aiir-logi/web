@@ -10,11 +10,11 @@ module.exports = {
     "<rootDir>/dist/",
     "<rootDir>/src/main/webapp/"
   ],
-  /*testResultsProcessor: 'jest-junit',
+  testResultsProcessor: 'jest-junit',
   reporters: [ 'default',
     ['jest-junit', {
       suiteName: 'puppeteer e2e tests',
-      outputDirectory: '<rootDir>/reports',
+      outputDirectory: '<rootDir>/build/reports/testE2e',
       outputName: 'puppeteer-results.xml'
-    }] ]*/
+    }] ]
 };

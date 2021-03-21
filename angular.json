@@ -82,6 +82,24 @@
             "browserTarget": "web:build"
           }
         },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "tsConfig": "tsconfig.spec.json",
+            "styles": [
+              "src/main/webapp/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "src/main/webapp/favicon.ico",
+              "src/main/webapp/assets"
+            ],
+            "reporters": [
+              "jest-junit"
+            ],
+            "coverage": true
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
