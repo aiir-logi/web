@@ -36,13 +36,13 @@ jobs:
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle-wrapper-
       - name: Cache Node Modules
-        id: node-cache
         uses: actions/cache@v2
         with:
           path: node_modules
           key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
           restore-keys: ${{ runner.os }}-node_modules-
-      - uses: actions/cache@v2
+      - name: Cache Npm Cache
+        uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
