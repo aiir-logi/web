@@ -97,7 +97,7 @@ tasks {
     }
 
     npmInstall {
-      outputs.cacheIf { true }
+      onlyIf { (System.getenv("NPM_INSTALL_CACHED") ?: "") != "true" }
     }
 
     register<NpxCachableTask>("buildWebapp") {
