@@ -5,8 +5,9 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.3.4"
     id("com.google.cloud.tools.jib") version "2.6.0"
-    id("com.moowork.node") version "1.3.1"
+    id("com.github.node-gradle.node") version "3.0.1"
     jacoco
+    id("org.sonarqube") version "3.0"
 }
 
 version = "0.1"
@@ -61,11 +62,6 @@ dependencies {
     testRuntimeOnly("org.testcontainers:postgresql")
 }
 
-sourceSets {
-  val testE2e by creating {
-  }
-}
-
 
 application {
     mainClass.set("pwr.aiir.ApplicationKt")
@@ -73,10 +69,6 @@ application {
 
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
-}
-
-node {
-  version = "15.11.0"
 }
 
 tasks {
@@ -101,10 +93,55 @@ tasks {
       reports.xml.isEnabled = true
     }
 
-    register<com.moowork.gradle.node.npm.NpmTask>("npmBuild") {
+    register<com.github.gradle.node.npm.task.NpxTask>("buildWebapp") {
       group = "angular"
-      dependsOn(npmInstall)
-      setArgs(listOf("run", "build", "--", "--prod", "--output-path=build/resources/main/static"))
+      command.set("ng")
+      args.set(listOf("build", "--prod"))
+      dependsOn("npmInstall")
+      inputs.dir(project.fileTree("src/main/webapp").exclude("**/*.spec.ts"))
+      inputs.dir("node_modules")
+      inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.app.json")
+      outputs.dir("${project.buildDir}/webapp")
+    }
+
+    register<com.github.gradle.node.npm.task.NpxTask>("testWebapp") {
+      group = "angular"
+      command.set("jest")
+      args.set(listOf("--coverage"))
+      dependsOn("npmInstall")
+      inputs.dir("src/main/webapp")
+      inputs.dir("node_modules")
+      inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
+      outputs.upToDateWhen { false }
+    }
+
+    register<com.github.gradle.node.npm.task.NpxTask>("testWebappE2e") {
+      group = "angular"
+      command.set("jest")
+      args.set(listOf("--config=./jest.config.e2e.js"))
+      dependsOn("npmInstall", "buildWebapp")
+      inputs.dir("${project.buildDir}/webapp")
+      inputs.dir("src/testE2e")
+      inputs.dir("node_modules")
+      inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
+      outputs.upToDateWhen { false }
+    }
+
+    register<com.github.gradle.node.npm.task.NpxTask>("testWebappE2eLocal") {
+      group = "angular"
+      environment.put("LOCAL_ENV", "true")
+      command.set("jest")
+      args.set(listOf("--config=./jest.config.e2e.js"))
+      dependsOn("npmInstall", "buildWebapp")
+      inputs.dir("${project.buildDir}/webapp")
+      inputs.dir("src/testE2e")
+      inputs.dir("node_modules")
+      inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
+      outputs.upToDateWhen { false }
+    }
+
+    test {
+      dependsOn("testWebapp")
     }
 
     jibDockerBuild {
@@ -116,4 +153,22 @@ tasks {
             image = "gcr.io/myapp/jib-image"
         }
     }
+}
+
+sourceSets {
+  kotlin {
+    main {
+      resources {
+        srcDir(tasks.getByName("buildWebapp"))
+      }
+    }
+  }
+  val testE2e by creating {
+  }
+}
+
+sonarqube {
+  properties {
+
+  }
 }

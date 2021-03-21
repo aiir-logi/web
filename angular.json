@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/web",
+            "outputPath": "build/webapp/static",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",
             "polyfills": "src/main/webapp/polyfills.ts",
@@ -105,8 +105,7 @@
           "options": {
             "tsConfig": [
               "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

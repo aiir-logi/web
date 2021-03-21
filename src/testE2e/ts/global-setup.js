@@ -6,7 +6,7 @@ const ip = require('ip');
 const fetch = require('node-fetch');
 
 const ipAddress = process.env.NODE_NAME ?? ip.address();
-const pathToStaticBuildContents = '/build/resources/main/static';
+const pathToStaticBuildContents = '/build/webapp/static';
 
 module.exports = async function globalSetup() {
   //ngnix container setup
