@@ -35,12 +35,13 @@ jobs:
           path: ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle-wrapper-
-#       - name: Cache Node Modules
-#         uses: actions/cache@v2
-#         with:
-#           path: node_modules
-#           key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
-#           restore-keys: ${{ runner.os }}-node_modules-
+      - name: Cache Node Modules
+        uses: actions/cache@v2
+        id: node-modules-cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node_modules-
       - name: Cache Npm Cache
         uses: actions/cache@v2
         with:
@@ -52,4 +53,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          NPM_INSTALL_CACHED: ${{ steps.node-modules-cache.outputs.cache-hit }}
         run: ./gradlew build sonarqube --info
