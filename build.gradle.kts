@@ -71,6 +71,11 @@ java {
     sourceCompatibility = JavaVersion.toVersion("11")
 }
 
+@CacheableTask
+abstract class NpxCachableTask : com.github.gradle.node.npm.task.NpxTask() {
+
+}
+
 tasks {
     compileKotlin {
         kotlinOptions {
@@ -93,7 +98,7 @@ tasks {
       reports.xml.isEnabled = true
     }
 
-    register<com.github.gradle.node.npm.task.NpxTask>("buildWebapp") {
+    register<NpxCachableTask>("buildWebapp") {
       group = "angular"
       command.set("ng")
       args.set(listOf("build", "--prod"))
@@ -104,7 +109,7 @@ tasks {
       outputs.dir("${project.buildDir}/webapp")
     }
 
-    register<com.github.gradle.node.npm.task.NpxTask>("testWebapp") {
+    register<NpxCachableTask>("testWebapp") {
       group = "angular"
       command.set("jest")
       args.set(listOf("--coverage"))
@@ -112,10 +117,10 @@ tasks {
       inputs.dir("src/main/webapp")
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
-      outputs.upToDateWhen { false }
+      outputs.dir("${project.buildDir}/reports/units")
     }
 
-    register<com.github.gradle.node.npm.task.NpxTask>("testWebappE2e") {
+    register<NpxCachableTask>("testWebappE2e") {
       group = "angular"
       command.set("jest")
       args.set(listOf("--config=./jest.config.e2e.js"))
@@ -124,7 +129,7 @@ tasks {
       inputs.dir("src/testE2e")
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
-      outputs.upToDateWhen { false }
+      outputs.dir("${project.buildDir}/reports/testE2e")
     }
 
     register<com.github.gradle.node.npm.task.NpxTask>("testWebappE2eLocal") {
@@ -137,7 +142,7 @@ tasks {
       inputs.dir("src/testE2e")
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
-      outputs.upToDateWhen { false }
+      outputs.dir("${project.buildDir}/reports/testE2e")
     }
 
     test {
