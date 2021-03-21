@@ -22,6 +22,8 @@ export class TasksListComponent implements OnInit {
   loadTasks() {
     this.service.list().subscribe(result => {
       this.tasks = result ? result : [];
+    }, error => {
+      this.tasks = [];
     })
   }
 

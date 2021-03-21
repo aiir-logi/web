@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router) {
     this.items = this.mapItems(router.config)
-    console.log(this.items)
   }
 
   ngOnInit(): void {
@@ -31,7 +30,6 @@ export class HomeComponent implements OnInit {
   }
 
   openMenu(): void {
-    console.log(this.items)
     this.menuOpened = !this.menuOpened
   }
 

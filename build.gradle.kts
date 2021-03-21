@@ -6,6 +6,7 @@ plugins {
     id("io.micronaut.application") version "1.3.4"
     id("com.google.cloud.tools.jib") version "2.6.0"
     id("com.moowork.node") version "1.3.1"
+    jacoco
 }
 
 version = "0.1"
@@ -60,6 +61,11 @@ dependencies {
     testRuntimeOnly("org.testcontainers:postgresql")
 }
 
+sourceSets {
+  val testE2e by creating {
+  }
+}
+
 
 application {
     mainClass.set("pwr.aiir.ApplicationKt")
@@ -67,6 +73,10 @@ application {
 
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
+}
+
+node {
+  version = "15.11.0"
 }
 
 tasks {
@@ -81,19 +91,29 @@ tasks {
         }
     }
 
-  register<com.moowork.gradle.node.npm.NpmTask>("npmBuild") {
-    group = "angular"
-    dependsOn(npmInstall)
-    setArgs(listOf("run", "build", "--", "--prod", "--output-path=build/resources/main/static"))
-  }
+    test {
+      useJUnitPlatform()
+      finalizedBy(jacocoTestReport)
+    }
 
-  jibDockerBuild {
-    dependsOn("npmBuild")
-  }
+    jacocoTestReport {
+      dependsOn(test)
+      reports.xml.isEnabled = true
+    }
 
-  jib {
-      to {
-          image = "gcr.io/myapp/jib-image"
-      }
-  }
+    register<com.moowork.gradle.node.npm.NpmTask>("npmBuild") {
+      group = "angular"
+      dependsOn(npmInstall)
+      setArgs(listOf("run", "build", "--", "--prod", "--output-path=build/resources/main/static"))
+    }
+
+    jibDockerBuild {
+      dependsOn("npmBuild")
+    }
+
+    jib {
+        to {
+            image = "gcr.io/myapp/jib-image"
+        }
+    }
 }
