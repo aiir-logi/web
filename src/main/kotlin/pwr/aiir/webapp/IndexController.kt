@@ -11,7 +11,7 @@ import java.util.*
 class IndexController(private val environment: Environment) {
 
 
-  @Get("/{path:[^\\.]*}")
+  @Get("/{path:(?!(swagger-ui|rapidoc|redoc))}")
   fun forward(path: String?): Optional<StreamedFile?>? {
     return environment.getResource("classpath:static/index.html").map { url: URL? ->
       StreamedFile(

@@ -1,0 +1,22 @@
+{
+  "request": {
+    "url": "http://172.28.96.1:54462/api/tasks",
+    "method": "GET",
+    "headers": {
+      "accept": "application/json, text/plain, */*",
+      "referer": "http://172.28.96.1:54462/tasks/list",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36"
+    },
+    "resourceType": "xhr"
+  },
+  "response": {
+    "url": "http://172.28.96.1:54462/api/tasks",
+    "status": 200,
+    "headers": {
+      "content-type": "text/html",
+      "connection": "keep-alive",
+      "accept-ranges": "bytes"
+    },
+    "body": []
+  }
+}

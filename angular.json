@@ -83,21 +83,21 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/main/webapp/test.ts",
-            "polyfills": "src/main/webapp/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "styles": [
+              "src/main/webapp/styles.css"
+            ],
+            "scripts": [],
             "assets": [
               "src/main/webapp/favicon.ico",
               "src/main/webapp/assets"
             ],
-            "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/main/webapp/styles.scss"
+            "reporters": [
+              "jest-junit"
             ],
-            "scripts": []
+            "coverage": true
           }
         },
         "lint": {
