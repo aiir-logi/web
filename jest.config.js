@@ -9,7 +9,11 @@ module.exports = {
         "!**/*.{js,jsx}",
         "!**/node_modules/**",
         "!**/vendor/**",
-        "!**/src/testE2e/ts/**"
+        "!**/src/testE2e/ts/**",
+        "!**/src/main/webapp/main.ts",
+        "!**/src/main/webapp/polyfills.ts",
+        "!**/*environment*.ts",
+        "!**/*module.ts"
     ],
     coveragePathIgnorePatterns: [
         "<rootDir>/node_modules",
