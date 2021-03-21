@@ -96,6 +96,10 @@ tasks {
       reports.xml.isEnabled = true
     }
 
+    npmInstall {
+      outputs.cacheIf { true }
+    }
+
     register<NpxCachableTask>("buildWebapp") {
       group = "angular"
       command.set("ng")
