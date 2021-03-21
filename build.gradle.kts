@@ -72,9 +72,10 @@ java {
 }
 
 @CacheableTask
-abstract class NpxCachableTask : com.github.gradle.node.npm.task.NpxTask() {
+abstract class NpxCachableTask : com.github.gradle.node.npm.task.NpxTask()
 
-}
+@org.gradle.api.tasks.CacheableTask
+abstract class NpmCachableInstall : com.github.gradle.node.npm.task.NpmInstallTask()
 
 tasks {
     compileKotlin {
@@ -98,6 +99,8 @@ tasks {
       reports.xml.isEnabled = true
     }
 
+    register<NpmCachableInstall>("npmCachableInstall")
+
     register<NpxCachableTask>("buildWebapp") {
       group = "angular"
       command.set("ng")
@@ -113,7 +116,7 @@ tasks {
       group = "angular"
       command.set("jest")
       args.set(listOf("--coverage"))
-      dependsOn("npmInstall")
+      dependsOn("npmCachableInstall")
       inputs.dir("src/main/webapp")
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
@@ -124,7 +127,7 @@ tasks {
       group = "angular"
       command.set("jest")
       args.set(listOf("--config=./jest.config.e2e.js"))
-      dependsOn("npmInstall", "buildWebapp")
+      dependsOn("npmCachableInstall", "buildWebapp")
       inputs.dir("${project.buildDir}/webapp")
       inputs.dir("src/testE2e")
       inputs.dir("node_modules")
@@ -137,7 +140,7 @@ tasks {
       environment.put("LOCAL_ENV", "true")
       command.set("jest")
       args.set(listOf("--config=./jest.config.e2e.js"))
-      dependsOn("npmInstall", "buildWebapp")
+      dependsOn("npmCachableInstall", "buildWebapp")
       inputs.dir("${project.buildDir}/webapp")
       inputs.dir("src/testE2e")
       inputs.dir("node_modules")
