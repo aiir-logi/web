@@ -105,7 +105,7 @@ tasks {
       group = "angular"
       command.set("ng")
       args.set(listOf("build", "--prod"))
-      dependsOn("npmInstall")
+      dependsOn("npmCachableInstall")
       inputs.dir(project.fileTree("src/main/webapp").exclude("**/*.spec.ts"))
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.app.json")
