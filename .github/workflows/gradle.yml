@@ -65,6 +65,8 @@ jobs:
 #             kotlin.parallel.tasks.in.project=true
           arguments: build testWebappE2e sonarqube
 #         run: ./gradlew build sonarqube --info
+      - name: list folder
+        run: ls ./build/test-results -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v2
         with:
