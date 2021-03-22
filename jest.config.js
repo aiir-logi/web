@@ -6,6 +6,7 @@ module.exports = {
     testResultsProcessor: "jest-sonar-reporter",
     collectCoverageFrom: [
         "**/*.ts",
+        "!**/*.mock.ts",
         "!**/*.{js,jsx}",
         "!**/node_modules/**",
         "!**/vendor/**",
