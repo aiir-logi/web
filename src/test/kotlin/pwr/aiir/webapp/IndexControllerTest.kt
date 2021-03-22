@@ -12,10 +12,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 @MicronautTest
-class IndexControllerTest(private val server: EmbeddedServer) {
+class IndexControllerTest(private val embeddedServer: EmbeddedServer) {
     @BeforeEach
     fun before() {
-        RestAssured.port = server.port
+        RestAssured.port = embeddedServer.port
     }
 
     @Test
