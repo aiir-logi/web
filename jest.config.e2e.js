@@ -13,8 +13,9 @@ module.exports = {
   testResultsProcessor: 'jest-junit',
   reporters: [ 'default',
     ['jest-junit', {
-      suiteName: 'puppeteer e2e tests',
-      outputDirectory: '<rootDir>/build/reports/testE2e',
-      outputName: 'puppeteer-results.xml'
+      suiteName: "e2e tests",
+      suitNameTemplate: "{filename}",
+      outputDirectory: '<rootDir>/build/test-results/testE2e',
+      outputName: 'e2e-results.xml'
     }] ]
 };
