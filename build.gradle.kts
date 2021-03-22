@@ -61,6 +61,7 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testRuntimeOnly("org.testcontainers:postgresql")
+    testImplementation("io.rest-assured:rest-assured:4.3.1")
 }
 
 
