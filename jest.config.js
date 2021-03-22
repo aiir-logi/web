@@ -3,6 +3,13 @@ module.exports = {
     setupFilesAfterEnv: ['<rootDir>/setupJest.ts'],
     testPathIgnorePatterns: ["/testE2e/"],
     testMatch: ['**/+(*.)+(spec).+(ts)'],
+    reporters: [ 'default',
+      ['jest-junit', {
+        suiteName: "unit tests",
+        suiteNameTemplate: "{filename}",
+        outputDirectory: '<rootDir>/build/test-results/units',
+        outputName: 'unit-results.xml'
+      }] ],
     testResultsProcessor: "jest-sonar-reporter",
     collectCoverageFrom: [
         "**/*.ts",
@@ -20,6 +27,5 @@ module.exports = {
         "<rootDir>/node_modules",
         "<rootDir>/*.ts"
     ],
-    coverageDirectory: '<rootDir>/build/reports/units/coverage',
-    testURL: 'http://localhost:8180'
+    coverageDirectory: '<rootDir>/build/reports/units/coverage'
 }
