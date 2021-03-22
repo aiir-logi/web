@@ -16,7 +16,7 @@ describe('HomeComponent', () => {
     path: '',
     component: HomeComponent,
     children: [
-      {path: 'testing/path', component: HomeComponent, translationPath: 'testing.name', data: {icon: 'testing-icon'}}
+      {path: 'testing/path', component: HomeComponent, data: {icon: 'testing-icon'}}
     ]
   }];
 
@@ -44,4 +44,10 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should open menu', () => {
+    expect(component.menuOpened).toBeTruthy()
+    component.openMenu()
+    expect(component.menuOpened).toBeFalsy()
+  })
 });
