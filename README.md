@@ -1,5 +1,7 @@
 # Web
 
+[![Build](https://github.com/aiir-logi/web/actions/workflows/gradle.yml/badge.svg)](https://github.com/aiir-logi/web/actions/workflows/gradle.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aiir-logi_web&metric=alert_status)](https://sonarcloud.io/dashboard?id=aiir-logi_web) 
+
 ### Requirements
 * Java 11
 * Node 14 (with npm)

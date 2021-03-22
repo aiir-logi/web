@@ -9,7 +9,7 @@ class TaskService(private val taskRepository: TaskRepository) {
     return taskRepository.findAll().toList()
   }
 
-  fun add(task : Task) {
-    taskRepository.save(task)
+  fun add(task : Task) : Task {
+    return taskRepository.save(task)
   }
 }

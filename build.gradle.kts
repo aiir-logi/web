@@ -6,6 +6,7 @@ plugins {
     id("io.micronaut.application") version "1.3.4"
     id("com.google.cloud.tools.jib") version "2.6.0"
     id("com.github.node-gradle.node") version "3.0.1"
+    id("org.ajoberstar.grgit") version "4.1.0"
     jacoco
     id("org.sonarqube") version "3.0"
 }
@@ -60,6 +61,7 @@ dependencies {
     testImplementation("org.testcontainers:testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testRuntimeOnly("org.testcontainers:postgresql")
+    testImplementation("io.rest-assured:rest-assured:4.3.1")
 }
 
 
@@ -118,7 +120,7 @@ tasks {
       dependsOn("npmInstall")
       inputs.dir("src/main/webapp")
       inputs.dir("node_modules")
-      inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
+      inputs.files("angular.json", ".browserslistrc", "jest.config.js", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/units")
     }
 
@@ -176,6 +178,6 @@ sourceSets {
 
 sonarqube {
   properties {
-
+    property("sonar.branch.name", grgit.branch.current().name)
   }
 }

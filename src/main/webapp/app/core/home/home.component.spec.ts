@@ -16,7 +16,8 @@ describe('HomeComponent', () => {
     path: '',
     component: HomeComponent,
     children: [
-      {path: 'testing/path', component: HomeComponent, translationPath: 'testing.name', data: {icon: 'testing-icon'}}
+      {path: 'testing/path', component: HomeComponent, data: {icon: 'testing-icon'}},
+      {path: 'testing/path_2', component: HomeComponent}
     ]
   }];
 
@@ -44,4 +45,16 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should open menu', () => {
+    expect(component.menuOpened).toBeTruthy()
+    component.openMenu()
+    expect(component.menuOpened).toBeFalsy()
+  })
+
+  it('should have routes', () => {
+    expect(component.items.length).toEqual(2)
+    expect(component.items[0].icon).toEqual('testing-icon')
+    expect(component.items[1].icon).toBeUndefined()
+  })
 });
