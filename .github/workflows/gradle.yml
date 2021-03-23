@@ -59,11 +59,11 @@ jobs:
           NPM_INSTALL_CACHED: ${{ steps.node-modules-cache.outputs.cache-hit }}
         with:
           arguments: build testWebappE2e sonarqube
-          properties: |
-            sonar.pullrequest.key=${{ github.event.number }}
-            sonar.pullrequest.branch=${{ github.HEAD_REF }}
-            sonar.pullrequest.base=${{ github.BASE_REF }}
-            sonar.pullrequest.github.repository=${{ github.repository }}
+#           properties: |
+#             sonar.pullrequest.key=${{ github.event.number }}
+#             sonar.pullrequest.branch=${{ github.HEAD_REF }}
+#             sonar.pullrequest.base=${{ github.BASE_REF }}
+#             sonar.pullrequest.github.repository=${{ github.repository }}
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v2
         with:
