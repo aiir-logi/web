@@ -181,6 +181,6 @@ sourceSets {
 
 sonarqube {
   properties {
-    property("sonar.branch.name", grgit.branch.current().name)
+    property("sonar.branch.name", (if (System.getProperty("sonar.pullrequest.key") == null) grgit.branch.current().name else ""))
   }
 }
