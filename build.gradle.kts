@@ -178,3 +178,9 @@ sourceSets {
   val testE2e by creating {
   }
 }
+
+sonarqube {
+  properties {
+    property("sonar.branch.name", grgit.branch.current().name)
+  }
+}
