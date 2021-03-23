@@ -17,6 +17,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: 8BitJonny/gh-get-current-pr@1.0.1
+        id: PR
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          filterOutClosed: true
+      - run: echo "Your PR is ${prNumber} and its JSON is ${prJSON}"
+        if: success() && steps.PR.outputs.number
+        env:
+          prNumber: ${{ steps.PR.outputs.number }}
+          prJSON: ${{ steps.PR.outputs.pr }
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
