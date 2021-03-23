@@ -122,6 +122,7 @@ tasks {
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "jest.config.js", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/units")
+      outputs.dir("${project.buildDir}/test-results/units")
     }
 
     register<NpxCachableTask>("testWebappE2e") {
@@ -134,6 +135,7 @@ tasks {
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/testE2e")
+      outputs.dir("${project.buildDir}/test-results/testE2e")
     }
 
     register<com.github.gradle.node.npm.task.NpxTask>("testWebappE2eLocal") {
@@ -147,10 +149,11 @@ tasks {
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/testE2e")
+      outputs.dir("${project.buildDir}/test-results/testE2e")
     }
 
-    test {
-      dependsOn("testWebapp")
+    build {
+      dependsOn("testWebapp", "testWebappE2e")
     }
 
     jibDockerBuild {
