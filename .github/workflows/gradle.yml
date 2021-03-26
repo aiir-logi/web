@@ -89,3 +89,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Publish Docker image
+        uses: burrunan/gradle-cache-action@v1
+        env:
+          NPM_INSTALL_CACHED: ${{ steps.node-modules-cache.outputs.cache-hit }}
+          ARTIFACTS_VERSION: ${{steps.version.outputs.new_tag}}
+        with:
+          arguments: jib
