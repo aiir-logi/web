@@ -4,14 +4,48 @@ plugins {
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.3.4"
-    id("com.google.cloud.tools.jib") version "2.6.0"
+    id("com.google.cloud.tools.jib") version "2.8.0"
     id("com.github.node-gradle.node") version "3.0.1"
     id("org.ajoberstar.grgit") version "4.1.0"
     jacoco
     id("org.sonarqube") version "3.0"
 }
 
-version = "0.1"
+val baseVersion = mapOf (
+  "major" to 0,
+  "minor" to 0
+  )
+
+fun getCalculatedVersion(): String {
+  var versionFromTag = "0.0.0"
+  val tags : List<org.ajoberstar.grgit.Tag> = grgit.tag.list()
+  if(tags.isNotEmpty()) {
+    val sortedTags : List<String> = tags.map { tag -> tag.name }
+    sortedTags.sortedWith(compareBy({it.split(".")[0].toInt()}, {it.split(".")[1].toInt()}, { it.split(".")[2].toInt() }))
+    versionFromTag = sortedTags[sortedTags.lastIndex]
+  }
+  var major : Int = versionFromTag.split(".")[0].toInt()
+  var minor : Int = versionFromTag.split(".")[1].toInt()
+  var patch : Int = versionFromTag.split(".")[2].toInt()
+  when {
+      baseVersion["major"]!! > versionFromTag.split(".")[0].toInt() -> {
+        major = baseVersion["major"]!!
+        minor = baseVersion["minor"]!!
+        patch = 0
+      }
+      baseVersion["minor"]!! > versionFromTag.split(".")[1].toInt() -> {
+        minor = baseVersion["minor"]!!
+        patch = 0
+      }
+      else -> {
+        patch += 1
+      }
+  }
+  return "${major}.${minor}.${patch}"
+}
+
+
+version = System.getenv("ARTIFACTS_VERSION") ?: getCalculatedVersion()
 group = "pwr.aiir"
 
 val kotlinVersion=project.properties.get("kotlinVersion")
@@ -122,6 +156,7 @@ tasks {
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "jest.config.js", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/units")
+      outputs.dir("${project.buildDir}/test-results/units")
     }
 
     register<NpxCachableTask>("testWebappE2e") {
@@ -134,6 +169,7 @@ tasks {
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/testE2e")
+      outputs.dir("${project.buildDir}/test-results/testE2e")
     }
 
     register<com.github.gradle.node.npm.task.NpxTask>("testWebappE2eLocal") {
@@ -147,10 +183,11 @@ tasks {
       inputs.dir("node_modules")
       inputs.files("angular.json", ".browserslistrc", "tsconfig.json", "tsconfig.spec.json")
       outputs.dir("${project.buildDir}/reports/testE2e")
+      outputs.dir("${project.buildDir}/test-results/testE2e")
     }
 
-    test {
-      dependsOn("testWebapp")
+    build {
+      dependsOn("testWebapp", "testWebappE2e")
     }
 
     jibDockerBuild {
@@ -158,8 +195,11 @@ tasks {
     }
 
     jib {
+        from {
+          image = "gcr.io/distroless/java:11"
+        }
         to {
-            image = "gcr.io/myapp/jib-image"
+          image = "aiirlogi/${project.name}:${project.version}"
         }
     }
 }
@@ -178,6 +218,6 @@ sourceSets {
 
 sonarqube {
   properties {
-    property("sonar.branch.name", grgit.branch.current().name)
+    property("sonar.branch.name", (if (System.getProperty("sonar.pullrequest.key") == "") grgit.branch.current().name else ""))
   }
 }
