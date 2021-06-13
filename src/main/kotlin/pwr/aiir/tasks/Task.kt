@@ -1,6 +1,7 @@
 package pwr.aiir.tasks
 
 import io.micronaut.core.annotation.Introspected
+import java.time.Instant
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -11,6 +12,8 @@ data class Task(
   @Id
   @GeneratedValue
   var id: UUID? = null,
-  var name: String? = null
+  var name: String? = null,
+  var startDate: Instant? = null,
+  var endDate: Instant? = null,
 ) {
 }
