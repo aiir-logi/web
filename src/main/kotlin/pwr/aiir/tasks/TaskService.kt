@@ -14,6 +14,8 @@ import kotlin.collections.ArrayList
 class TaskService(private val taskRepository: TaskRepository,
                   private val subTaskKafkaClient: SubTaskKafkaClient) {
 
+  private val SUBTASKS_COUNT: Int = 20
+
   fun list(): List<Task> {
     return taskRepository.findAll().toList()
   }
@@ -38,10 +40,15 @@ class TaskService(private val taskRepository: TaskRepository,
 
     var subtasks = ArrayList<SubTask>()
     var start = task.startDate
+    val timeBetweenDates = start?.until(task.endDate, ChronoUnit.MILLIS)
+
+    Objects.requireNonNull(timeBetweenDates, "Dates cannot be the same");
+
+    val incrementTime = timeBetweenDates!!.div(SUBTASKS_COUNT)
 
     while (!start!!.isAfter(task.endDate)) {
       val subTask = SubTask(startDate = start)
-      start = start.plus(1, ChronoUnit.HOURS)
+      start = start.plus(incrementTime, ChronoUnit.MILLIS)
 
       if (start.isAfter(task.endDate)) {
         subTask.endDate = task.endDate!!
@@ -50,8 +57,6 @@ class TaskService(private val taskRepository: TaskRepository,
       }
       subTask.filters = task.filters
       subtasks.add(subTask)
-
-
     }
     return subtasks
   }
