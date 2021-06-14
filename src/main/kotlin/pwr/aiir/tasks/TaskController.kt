@@ -10,7 +10,7 @@ import io.micronaut.http.annotation.Post
 class TaskController(private val taskService: TaskService) {
 
   @Get("tasks")
-  fun getTasks(): List<Task> {
+  fun getTasks(): List<TaskDTO> {
     return taskService.list()
   }
 

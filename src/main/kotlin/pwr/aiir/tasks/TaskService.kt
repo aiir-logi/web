@@ -1,6 +1,7 @@
 package pwr.aiir.tasks
 
 import pwr.aiir.subtasks.SubTask
+import pwr.aiir.subtasks.SubTaskDTO
 import pwr.aiir.subtasks.SubTaskKafkaClient
 import pwr.aiir.subtasks.SubTaskService
 import java.time.Duration
@@ -16,8 +17,25 @@ class TaskService(private val taskRepository: TaskRepository,
 
   private val SUBTASKS_COUNT: Int = 20
 
-  fun list(): List<Task> {
-    return taskRepository.findAll().toList()
+  fun list(): List<TaskDTO> {
+    val tasks = taskRepository.findAll().toList()
+    return tasks.map { task -> toDTO(task) }
+  }
+
+  private fun toDTO(task : Task): TaskDTO {
+    return TaskDTO(
+      id = task.id,
+      name = task.name,
+      startDate = task.startDate,
+      endDate = task.endDate,
+      filters = task.subtasks.first().filters!!,
+      subtasks = task.subtasks.map { subTask -> SubTaskDTO(
+        id = subTask.id,
+        startDate = subTask.startDate,
+        endDate = subTask.endDate,
+        status = subTask.subTaskStatus
+      ) }
+    )
   }
 
   fun add(task: TaskDTO): Task {

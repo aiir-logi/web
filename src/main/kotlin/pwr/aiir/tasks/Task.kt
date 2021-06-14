@@ -17,7 +17,7 @@ data class Task(
   var name: String? = null,
   var startDate: Instant? = null,
   var endDate: Instant? = null,
-  @OneToMany(cascade = [CascadeType.ALL])
+  @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
   var subtasks: List<SubTask>
 ) {
 }
