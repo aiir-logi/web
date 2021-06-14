@@ -1,12 +1,14 @@
 package pwr.aiir.tasks
 
 import io.micronaut.core.annotation.Introspected
+import pwr.aiir.annotation.NoArg
+import pwr.aiir.filter.Filter
+import pwr.aiir.subtasks.SubTask
 import java.time.Instant
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
+@NoArg
 @Entity
 data class Task(
   @Id
@@ -15,5 +17,7 @@ data class Task(
   var name: String? = null,
   var startDate: Instant? = null,
   var endDate: Instant? = null,
+  @OneToMany(cascade = [CascadeType.ALL])
+  var subtasks: List<SubTask>
 ) {
 }

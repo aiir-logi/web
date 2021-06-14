@@ -6,6 +6,7 @@ plugins {
   id("io.micronaut.application") version "1.3.4"
   id("com.google.cloud.tools.jib") version "2.8.0"
   id("com.github.node-gradle.node") version "3.0.1"
+  id("org.jetbrains.kotlin.plugin.noarg") version "1.4.10"
   id("org.ajoberstar.grgit") version "4.1.0"
   jacoco
   id("org.sonarqube") version "3.0"
@@ -66,6 +67,10 @@ micronaut {
     incremental(true)
     annotations("pwr.aiir.*")
   }
+}
+
+noArg {
+  annotation("pwr.aiir.annotation.NoArg")
 }
 
 dependencies {

@@ -15,7 +15,7 @@ data class SubTask(
   var id: UUID? = null,
   var startDate: Instant = Instant.now(),
   var endDate: Instant = Instant.now(),
-  @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+  @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
   var filters: List<Filter>? = Collections.emptyList(),
   @OneToMany(cascade = [CascadeType.ALL])
   var results: List<LogEntity>? = Collections.emptyList(),

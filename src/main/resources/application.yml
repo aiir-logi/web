@@ -30,7 +30,7 @@ micronaut:
 #    dialect: H2
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5000/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
@@ -57,7 +57,7 @@ consul:
       enabled: false
 kafka:
   bootstrap:
-    servers: localhost:9093
+    servers: localhost:9092
   producers:
     default:
       retries: 5
