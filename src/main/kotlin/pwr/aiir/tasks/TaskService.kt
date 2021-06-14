@@ -20,7 +20,6 @@ class TaskService(private val taskRepository: TaskRepository,
 
   fun add(task: TaskDTO): Task {
 
-    //sendSubTasks(task)
     var taskEntity = Task(
       id = task.id,
       name = task.name,
@@ -29,11 +28,11 @@ class TaskService(private val taskRepository: TaskRepository,
       subtasks = createSubtasks(task)
     )
     taskEntity = taskRepository.save(taskEntity)
-    taskEntity.subtasks.forEach{subTask -> subTaskKafkaClient.sendSubTask(subTask) }
+    taskEntity.subtasks.forEach { subTask -> subTaskKafkaClient.sendSubTask(subTask) }
     return taskEntity
   }
 
-  private fun createSubtasks(task: TaskDTO) : List<SubTask> {
+  private fun createSubtasks(task: TaskDTO): List<SubTask> {
     Objects.requireNonNull(task.startDate, "Received null time-of-day for start.");
     Objects.requireNonNull(task.endDate, "Received null time-of-day for stop.");
 
@@ -55,7 +54,5 @@ class TaskService(private val taskRepository: TaskRepository,
 
     }
     return subtasks
-    //subtasks = subTaskService.createSubTasks(subtasks);
-    //subtasks.forEach { subTaskKafkaClient.sendSubTask(it) }
   }
 }

@@ -19,5 +19,5 @@ data class SubTask(
   var filters: List<Filter>? = Collections.emptyList(),
   @OneToMany(cascade = [CascadeType.ALL])
   var results: List<LogEntity>? = Collections.emptyList(),
-  var finished: Boolean = false,
+  var subTaskStatus: SubTaskStatus = SubTaskStatus.CREATED
 )
