@@ -30,7 +30,7 @@ micronaut:
 #    dialect: H2
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: "jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/postgres"
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
@@ -47,17 +47,12 @@ jpa:
           auto: update
         #          auto: validate
         #          auto: none
-
-consul:
-  client:
-    registration:
-      enabled: false
-    defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
-    config:
-      enabled: false
-#kafka:
-#  bootstrap:
-#    servers: localhost:9093
-#  producers:
-#    default:
-#      retries: 5
+jackson:
+  serialization:
+    writeDatesAsTimestamps: false
+kafka:
+  bootstrap:
+    servers: "${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}"
+  producers:
+    default:
+      retries: 5

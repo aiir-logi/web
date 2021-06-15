@@ -13,4 +13,8 @@ export class TasksService {
   list() : Observable<Array<Task>> {
     return this.http.get<Array<Task>>('api/tasks');
   }
+
+  create(task: Task): Observable<Task> {
+    return this.http.post('api/tasks', task);
+  }
 }

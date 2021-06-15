@@ -5,8 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CoreModule} from "./core/core.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
+import {TasksModule} from './tasks/tasks.module';
+import {JsonDateInterceptor} from './JsonDateInterceptor';
 
 
 @NgModule({
@@ -18,9 +20,14 @@ import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    TasksModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: JsonDateInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
