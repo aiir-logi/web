@@ -1,0 +1,75 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      GitHub's API rate limit has been reached. It will be reset in one minute.
+    </div>
+  </div>
+
+  <div class="example-table-container">
+    <table mat-table [dataSource]="data" class="example-table"
+           matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let row">{{row.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef>Created</th>
+        <td mat-cell *matCellDef="let row">{{row.created | date :"medium"}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="thread">
+        <th mat-header-cell *matHeaderCellDef>Thread</th>
+        <td mat-cell *matCellDef="let row">{{row.thread}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="level">
+        <th mat-header-cell *matHeaderCellDef>Level</th>
+        <td mat-cell *matCellDef="let row">{{row.level}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="loggerName">
+        <th mat-header-cell *matHeaderCellDef>Logger Name</th>
+        <td mat-cell *matCellDef="let row">{{row.loggerName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="message">
+        <th mat-header-cell *matHeaderCellDef>Message</th>
+        <td mat-cell *matCellDef="let row">{{row.message}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="endOfBatch">
+        <th mat-header-cell *matHeaderCellDef>End of Batch</th>
+        <td mat-cell *matCellDef="let row">{{row.endOfBatch}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="loggerFqcn">
+        <th mat-header-cell *matHeaderCellDef>Logger Fqcn</th>
+        <td mat-cell *matCellDef="let row">{{row.loggerFqcn}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="threadId">
+        <th mat-header-cell *matHeaderCellDef>Thread Id</th>
+        <td mat-cell *matCellDef="let row">{{row.threadId}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="threadPriority">
+        <th mat-header-cell *matHeaderCellDef>Thread Priority</th>
+        <td mat-cell *matCellDef="let row">{{row.threadPriority}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="200"></mat-paginator>
+</div>
+
+
+<!-- Copyright 2021 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

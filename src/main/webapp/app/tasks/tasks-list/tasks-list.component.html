@@ -1,18 +1,38 @@
-<table mat-table [dataSource]="tasks" class="mat-elevation-z8">
+<div class="example-container mat-elevation-z8">
+<a mat-raised-button color="primary" [routerLink]="['/tasks/new']" class="new-button">Create new</a>
+<table mat-table [dataSource]="tasks">
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
 
   <!-- Id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
+<!--  <ng-container matColumnDef="id">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Id </th>-->
+<!--    <td mat-cell *matCellDef="let element"> {{element.id}} </td>-->
+<!--  </ng-container>-->
 
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef> Start Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.startDate | date : "medium" : "UTC"}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="endDate">
+    <th mat-header-cell *matHeaderCellDef> End Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.endDate | date :"medium" :"UTC"}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <td mat-cell *matCellDef="let element">
+      <a [routerLink]="['/tasks', element.id]" *ngIf="getStatus(element)==='Done'" mat-raised-button color="accent"> View Results </a>
+      <p *ngIf="getStatus(element)!=='Done'">{{getStatus(element)}}</p>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -23,3 +43,4 @@
     </td>
   </tr>
 </table>
+</div>

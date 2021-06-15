@@ -47,14 +47,9 @@ jpa:
           auto: update
         #          auto: validate
         #          auto: none
-
-consul:
-  client:
-    registration:
-      enabled: false
-    defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
-    config:
-      enabled: false
+jackson:
+  serialization:
+    writeDatesAsTimestamps: false
 kafka:
   bootstrap:
     servers: localhost:9092

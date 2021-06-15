@@ -10,7 +10,7 @@ import {TasksService} from "../tasks.service";
 export class TasksListComponent implements OnInit {
 
   tasks : Array<Task>
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['name', 'startDate', 'endDate', 'status'];
 
   constructor(private service : TasksService) {
     this.loadTasks();
@@ -22,7 +22,22 @@ export class TasksListComponent implements OnInit {
   loadTasks() {
     this.service.list().subscribe(result => {
       this.tasks = result ? result : [];
+      console.log(this.tasks);
     })
+  }
+
+  getStatus(task: Task): string {
+    var res = {};
+    task.subtasks.forEach(v => {
+      res[v.status] = (res[v.status] || 0) + 1;
+    });
+    if( res["IN_PROGRESS"] !== undefined) {
+      return "In progress"
+    }
+    if( res['CREATED'] !== undefined ) {
+      return "Created"
+    }
+    return "Done"
   }
 
 }

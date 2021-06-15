@@ -1,0 +1,65 @@
+<div class="example-container mat-elevation-z8">
+  <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+    <div class="card m-3">
+      <h5 class="card-header">Add new Task</h5>
+      <div class="form-row">
+        <input formControlName="name" placeholder="Provide a name">
+      </div>
+      <div class="form-row">
+          <input type="datetime-local" formControlName="startDate" placeholder="start date">
+      </div>
+      <div class="form-row">
+        <input type="datetime-local" formControlName="endDate" placeholder="start date">
+      </div>
+      <div class="card-body border-bottom">
+        <div class="form-row">
+          <div class="form-group">
+            <button mat-stroked-button color="primary" (click)="onChangeTickets(1)" type="button">Add new Filter</button>
+            <button mat-stroked-button color="accent" (click)="onChangeTickets(-1)"type="button">Remove last Filter</button>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let filter of filterFormGroups; let i = index" class="list-group list-group-flush">
+        <div class="list-group-item">
+          <h5 class="card-title">Filter {{i + 1}}</h5>
+          <div [formGroup]="filter" class="form-row">
+            <div class="form-group col-6">
+              <label>Field Name</label>
+<!--              <input type="text" formControlName="fieldName" class="form-control" [ngClass]="{ 'is-invalid': submitted && filter.controls.fieldName.errors }" />-->
+<!--              <div *ngIf="submitted && filter.controls.fieldName.errors" class="invalid-feedback">-->
+<!--                <div *ngIf="filter.controls.fieldName.errors.required">Name is required</div>-->
+<!--              </div>-->
+              <select formControlName="fieldName" class="form-control" [ngClass]="{ 'is-invalid': submitted && filter.controls.fieldName.errors }">
+                <option value=""></option>
+                <option *ngFor="let field of fields" value="field.id">{{field.display}}</option>
+              </select>`
+            </div>
+            <div class="form-group col-6">
+              <label>Search Type</label>
+<!--              <input type="text" formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': submitted && filter.controls.type.errors }" />-->
+<!--              <div *ngIf="submitted && filter.controls.type.errors" class="invalid-feedback">-->
+<!--                <div *ngIf="filter.controls.type.errors.required">Search type is required</div>-->
+<!--              </div>-->
+              <select formControlName="type" class="form-control" [ngClass]="{ 'is-invalid': submitted && filter.controls.type.errors }">
+                <option value=""></option>
+                <option *ngFor="let i of ['EQUALS','REGEX','GREATER','LESS','GREATER_EQUALS','LESS_EQUALS','NOT_EQUALS']">{{i}}</option>
+              </select>
+            </div>
+            <div class="form-group col-6">
+              <label>Searched Value</label>
+              <input type="text" formControlName="value" class="form-control" [ngClass]="{ 'is-invalid': submitted && filter.controls.value.errors }" />
+              <div *ngIf="submitted && filter.controls.value.errors" class="invalid-feedback">
+                <div *ngIf="filter.controls.value.errors.required">Value is required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-center border-top-0">
+        <button mat-raised-button color="primary" type="submit">Add task</button>
+        <button mat-raised-button color="warn" type="reset" (click)="onReset()">Reset</button>
+        <button mat-raised-button color="accent" type="button" (click)="onClear()">Clear</button>
+      </div>
+    </div>
+  </form>
+</div>
