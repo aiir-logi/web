@@ -191,9 +191,9 @@ tasks {
     outputs.dir("${project.buildDir}/test-results/testE2e")
   }
 
-  build {
-    dependsOn("testWebapp", "testWebappE2e")
-  }
+//  build {
+//    dependsOn("testWebapp", "testWebappE2e")
+//  }
 
   jibDockerBuild {
     dependsOn("npmBuild")
