@@ -31,7 +31,7 @@
 <!--              </div>-->
               <select formControlName="fieldName" class="form-control" [ngClass]="{ 'is-invalid': submitted && filter.controls.fieldName.errors }">
                 <option value=""></option>
-                <option *ngFor="let field of fields" value="field.id">{{field.display}}</option>
+                <option *ngFor="let field of fields" value="{{field.id}}">{{field.display}}</option>
               </select>`
             </div>
             <div class="form-group col-6">
