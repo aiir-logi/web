@@ -47,26 +47,26 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        id: node-modules-cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node_modules-
-      - name: Cache Npm Cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+#       - name: Cache SonarCloud packages
+#         uses: actions/cache@v1
+#         with:
+#           path: ~/.sonar/cache
+#           key: ${{ runner.os }}-sonar
+#           restore-keys: ${{ runner.os }}-sonar
+#       - name: Cache Node Modules
+#         uses: actions/cache@v2
+#         id: node-modules-cache
+#         with:
+#           path: node_modules
+#           key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+#           restore-keys: ${{ runner.os }}-node_modules-
+#       - name: Cache Npm Cache
+#         uses: actions/cache@v2
+#         with:
+#           path: ~/.npm
+#           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#           restore-keys: |
+#             ${{ runner.os }}-node-
       - name: Build and analyze
         uses: burrunan/gradle-cache-action@v1
         env:
