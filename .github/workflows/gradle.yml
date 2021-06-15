@@ -75,7 +75,7 @@ jobs:
           NPM_INSTALL_CACHED: ${{ steps.node-modules-cache.outputs.cache-hit }}
           ARTIFACTS_VERSION: ${{steps.version.outputs.new_tag}}
         with:
-          arguments: build sonarqube
+          arguments: build
 #           properties: |
 #             sonar.pullrequest.key=${{ github.event.number }}
 #             sonar.pullrequest.branch=${{ github.HEAD_REF }}
